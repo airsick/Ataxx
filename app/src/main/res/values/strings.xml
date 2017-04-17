@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Ataxx</string>
+    <string name="singleplayer_button">SinglePlayer</string>
+    <string name="multiplayer_button">MultiPlayer</string>
+</resources>
