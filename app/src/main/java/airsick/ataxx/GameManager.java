@@ -2,6 +2,8 @@ package airsick.ataxx;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -64,6 +66,22 @@ public class GameManager {
         whiteTurnMarkerPiece.place(GamePiece.COLOR_WHITE);
 
         // Set starting player
+        activePlayer = GamePiece.COLOR_BLACK;
+
+        // Initial board positions
+        boardPieces[0][0].place(GamePiece.COLOR_BLACK);
+        boardPieces[6][6].place(GamePiece.COLOR_BLACK);
+
+        boardPieces[0][6].place(GamePiece.COLOR_WHITE);
+        boardPieces[6][0].place(GamePiece.COLOR_WHITE);
+    }
+
+    public void reset() {
+        for(int i=0; i<7; i++) {
+            for(int j=0; j<7; j++) {
+                boardPieces[i][j].isPlaced = false;
+            }
+        }
         activePlayer = GamePiece.COLOR_BLACK;
 
         // Initial board positions
@@ -142,6 +160,17 @@ public class GameManager {
             new AlertDialog.Builder(context)
                 .setTitle("Winner")
                 .setMessage(winner + " wins!")
+                .setPositiveButton("New Game", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        reset();
+                    }
+                })
+                .setNegativeButton("Menu", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent i = new Intent(context, MainActivity.class);
+                        context.startActivity(i);
+                    }
+                })
                 .show();
         }
     }
