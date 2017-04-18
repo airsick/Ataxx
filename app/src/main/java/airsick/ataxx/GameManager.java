@@ -257,6 +257,15 @@ public class GameManager {
         }
     }
 
+    public void update() {
+
+        for(int i = 0; i<boardPieces.length; i++) {
+            for (int j = 0; j < boardPieces[i].length; j++) {
+                boardPieces[i][j].update();
+            }
+        }
+    }
+
     public void touchEvent(MotionEvent event) {
         // Check if user is tapping a board position
         for(int i = 0; i<boardPieces.length; i++) {
