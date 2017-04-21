@@ -56,24 +56,24 @@ public class GameManager {
                 (int) ((board.getWidth()/7)*2.5+boardX),
                 (int) (board.getHeight()/7)+10);
         blackTurnMarkerPiece = new GamePiece(context, GamePiece.COLOR_BLACK, pieceBounds, false);
-        blackTurnMarkerPiece.place(GamePiece.COLOR_BLACK);
+        blackTurnMarkerPiece.placeSilent(GamePiece.COLOR_BLACK);
 
         pieceBounds = new Rect((int) ((board.getWidth()/7)*4.5+boardX),
                 10,
                 (int) ((board.getWidth()/7)*(5.5)+boardX),
                 (int) (board.getHeight()/7)+10);
         whiteTurnMarkerPiece = new GamePiece(context, GamePiece.COLOR_BLACK, pieceBounds, false);
-        whiteTurnMarkerPiece.place(GamePiece.COLOR_WHITE);
+        whiteTurnMarkerPiece.placeSilent(GamePiece.COLOR_WHITE);
 
         // Set starting player
         activePlayer = GamePiece.COLOR_BLACK;
 
         // Initial board positions
-        boardPieces[0][0].place(GamePiece.COLOR_BLACK);
-        boardPieces[6][6].place(GamePiece.COLOR_BLACK);
+        boardPieces[0][0].placeSilent(GamePiece.COLOR_BLACK);
+        boardPieces[6][6].placeSilent(GamePiece.COLOR_BLACK);
 
-        boardPieces[0][6].place(GamePiece.COLOR_WHITE);
-        boardPieces[6][0].place(GamePiece.COLOR_WHITE);
+        boardPieces[0][6].placeSilent(GamePiece.COLOR_WHITE);
+        boardPieces[6][0].placeSilent(GamePiece.COLOR_WHITE);
     }
 
     public void reset() {
@@ -85,11 +85,11 @@ public class GameManager {
         activePlayer = GamePiece.COLOR_BLACK;
 
         // Initial board positions
-        boardPieces[0][0].place(GamePiece.COLOR_BLACK);
-        boardPieces[6][6].place(GamePiece.COLOR_BLACK);
+        boardPieces[0][0].placeSilent(GamePiece.COLOR_BLACK);
+        boardPieces[6][6].placeSilent(GamePiece.COLOR_BLACK);
 
-        boardPieces[0][6].place(GamePiece.COLOR_WHITE);
-        boardPieces[6][0].place(GamePiece.COLOR_WHITE);
+        boardPieces[0][6].placeSilent(GamePiece.COLOR_WHITE);
+        boardPieces[6][0].placeSilent(GamePiece.COLOR_WHITE);
     }
 
     private void expand(int x, int y) {
@@ -155,7 +155,9 @@ public class GameManager {
             }
         }
 
-        if(blackPieceCount+whitePieceCount==49) {
+        if(blackPieceCount+whitePieceCount==49
+                || blackPieceCount == 0 
+                || whitePieceCount == 0) {
             String winner = (blackPieceCount > whitePieceCount)?"Black":"White";
             new AlertDialog.Builder(context)
                 .setTitle("Winner")

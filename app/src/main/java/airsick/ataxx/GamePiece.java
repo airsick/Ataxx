@@ -8,8 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.icu.util.Calendar;
-import android.provider.Settings;
+import android.media.MediaPlayer;
 
 /**
  * Created by coler_000 on 4/13/2017.
@@ -19,6 +18,7 @@ public class GamePiece {
     public static int COLOR_WHITE = 0;
     public static int COLOR_BLACK = 1;
 
+    private static MediaPlayer placePieceSound;
     private static Bitmap blackImage;
     private static Bitmap whiteImage;
     private static Bitmap[] blackToWhiteImage;
@@ -37,6 +37,8 @@ public class GamePiece {
     public GamePiece (Context context) {
         // This runs on the first piece that's initialized, setting all the images
         if(blackImage == null) {
+            placePieceSound = MediaPlayer.create(context, R.raw.place_piece_sound);
+
             blackImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.black1);
             whiteImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.white1);
 
@@ -158,6 +160,11 @@ public class GamePiece {
     }
 
     public void place(int color) {
+        placeSilent(color);
+        placePieceSound.start();
+    }
+
+    public void placeSilent(int color) {
         isPlaced = true;
         currentColor = color;
         if(color==COLOR_BLACK)
